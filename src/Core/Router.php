@@ -11,7 +11,10 @@ class Router
     {
         $path = $this->normalizePath($path);
 
-        // Convert dynamic parameters to regex, e.g., "/users/{id}" -> "/users/(?<id>[^/]+)"
+        /**
+         * Convert dynamic parameters to regex,
+         * e.g., "/users/{id}" -> "/users/(?<id>[^/]+)"
+         **/
         $regexPath = preg_replace('/\{(\w+)\}/', '(?P<\1>[^/]+)', $path);
 
         $this->routes[] = [
