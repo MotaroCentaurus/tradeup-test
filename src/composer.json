@@ -1,0 +1,18 @@
+{
+    "name": "dsousa/php-viacep-test",
+    "description": "This project is a leetcode test in order to verify coding proficiency",
+    "type": "project",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Dsousa\\PhpViacepTest\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Diego Sousa",
+            "email": "diego@diegosousa.com.br"
+        }
+    ],
+    "require": {}
+}
