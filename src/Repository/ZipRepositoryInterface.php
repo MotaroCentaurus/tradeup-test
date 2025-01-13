@@ -8,6 +8,6 @@ use App\DTO\ZipCodeResponseDTO;
 
 interface ZipRepositoryInterface
 {
-  public function getAddressByLocation(LocationRequestDTO $requestDTO): ZipCodeResponseDTO;
+  public function getAddressByLocation(LocationRequestDTO $requestDTO): array;
   public function getAddressByZipCode(ZipCodeRequestDTO $requestDTO): ZipCodeResponseDTO;
 }

@@ -16,7 +16,7 @@ class ZipRepository implements ZipRepositoryInterface
     $this->zipService = $zipService;
   }
 
-  public function getAddressByLocation(LocationRequestDTO $requestDTO): ZipCodeResponseDTO
+  public function getAddressByLocation(LocationRequestDTO $requestDTO): array
   {
     return $this->zipService->getAddressByLocation($requestDTO);
   }
