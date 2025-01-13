@@ -1,0 +1,12 @@
+version: '3.3'
+
+services:
+  php:
+    image: php:8.3-cli
+    container_name: php_via_cep
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - "8000:8000"
+    command: php -S 0.0.0.0:8000 ./index.php
