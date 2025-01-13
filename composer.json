@@ -14,5 +14,7 @@
             "email": "diego@diegosousa.com.br"
         }
     ],
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    }
 }
