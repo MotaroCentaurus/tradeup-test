@@ -5,7 +5,6 @@ namespace App\UseCase;
 use App\DTO\ZipCodeResponseDTO;
 use App\DTO\ZipCodeRequestDTO;
 use App\Service\ZipServiceInterface;
-use App\Service\ViaCepService;
 use App\Repository\ZipRepositoryInterface;
 
 class GetAddressByZipCodeUseCase
