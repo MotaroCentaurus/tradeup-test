@@ -2,11 +2,23 @@
 
 namespace App\Controller;
 
+use App\DTO\ZipCodeRequestDTO;
+use App\UseCase\GetAddressByZipCodeUseCase;
+use App\Repository\ZipRepository;
+use App\Service\ViaCepService;
+
 class ZipController
 {
     public function show(string $zipcode)
     {
-        echo "Showing zip with zipcode: $zipcode";
+        $request = new ZipCodeRequestDTO($zipcode);
+
+        $response = (new GetAddressByZipCodeUseCase(
+            $request,
+            new ZipRepository(new ViaCepService())
+        ))();
+
+        echo json_encode($response->toArray());
     }
 
     public function showZipByLocation(string $uf, string $city, string $street)
