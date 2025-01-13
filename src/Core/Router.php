@@ -39,7 +39,6 @@ class Router
         $method = strtoupper($_SERVER['REQUEST_METHOD']);
 
         foreach ($this->routes as $route) {
-            // Match the route's regex pattern with the current path
             if (!preg_match("#^{$route['path']}$#", $path, $matches)) {
                 continue;
             }
@@ -50,17 +49,14 @@ class Router
 
             [$class, $function] = $route['controller'];
 
-            // Extract dynamic parameters (named capture groups)
             $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
 
-            // Instantiate the controller and invoke the method with parameters
             $controllerInstance = new $class;
             call_user_func_array([$controllerInstance, $function], $params);
 
             return;
         }
 
-        // If no route matches
         http_response_code(404);
         echo "404 Not Found";
     }

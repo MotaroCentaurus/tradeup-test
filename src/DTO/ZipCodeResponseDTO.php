@@ -2,6 +2,11 @@
 
 namespace App\DTO;
 
+/**
+ * DTO was made in order
+ * to represent ViaCEP
+ * response entity
+ */
 class ZipCodeResponseDTO
 {
   private ?string $cep;
@@ -39,6 +44,13 @@ class ZipCodeResponseDTO
       $this->siafi = $siafi;
   }
 
+  /**
+   * It was made
+   * in order to
+   * easing object conversion
+   *
+   * @return array
+   */
   public function toArray(): array
   {
       return [

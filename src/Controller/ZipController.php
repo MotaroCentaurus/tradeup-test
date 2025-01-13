@@ -12,6 +12,12 @@ use GuzzleHttp\Client;
 
 class ZipController
 {
+    /**
+     * GET /zip/{zipcode}
+     *
+     * @param string $zipcode
+     * @return void
+     */
     public function show(string $zipcode)
     {
         $request = new ZipCodeRequestDTO($zipcode);
@@ -28,6 +34,14 @@ class ZipController
         echo json_encode($response->toArray());
     }
 
+    /**
+     * GET /zip/{uf}/{city}/{street}
+     *
+     * @param string $uf
+     * @param string $city
+     * @param string $street
+     * @return void
+     */
     public function showZipByLocation(string $uf, string $city, string $street)
     {
         $request = new LocationRequestDTO($uf, $city, $street);
