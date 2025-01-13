@@ -7,8 +7,11 @@ use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
+use App\DTO\LocationRequestDTO;
+use App\DTO\ZipCodeRequestDTO;
+use App\DTO\ZipCodeResponseDTO;
 
-class ViaCepService implements CepServiceInterface
+class ViaCepService implements ZipServiceInterface
 {
     private const BASE_URL = 'https://viacep.com.br/ws/';
 
@@ -19,7 +22,7 @@ class ViaCepService implements CepServiceInterface
         $this->httpClient = new Client();
     }
 
-    public function getAddressByZipCode(ViaCEPRequestDTO $request): ViaCEPResponseDTO
+    public function getAddressByZipCode(ZipCodeRequestDTO $request): ZipCodeResponseDTO
     {
         $cep = $request->getCep();
 
@@ -27,7 +30,7 @@ class ViaCepService implements CepServiceInterface
             throw new \InvalidArgumentException('O CEP deve conter exatamente 8 dígitos.');
         }
 
-        $url = self::BASE_URL . "$cep/json/";
+        $url = self::BASE_URL . "{$cep}/json/";
 
         try {
             $response = $this->httpClient->request('GET', $url);
@@ -37,7 +40,7 @@ class ViaCepService implements CepServiceInterface
                 throw new \RuntimeException('CEP não encontrado.');
             }
 
-            return new ViaCEPResponseDTO(
+            return new ZipCodeResponseDTO(
                 $data['cep'] ?? null,
                 $data['logradouro'] ?? null,
                 $data['complemento'] ?? null,
@@ -54,13 +57,17 @@ class ViaCepService implements CepServiceInterface
         }
     }
 
-    public function getAddressByLocation(string $uf, string $city, string $street): array
+    public function getAddressByLocation(LocationRequestDTO $request): array
     {
+        $uf = $request->getUf();
+        $city = $request->getCity();
+        $street = $request->getStreet();
+
         if (strlen($city) < 3 || strlen($street) < 3) {
             throw new \InvalidArgumentException('Cidade e logradouro devem ter pelo menos 3 caracteres.');
         }
 
-        $url = self::BASE_URL . "$uf/$city/$street/json/";
+        $url = self::BASE_URL . "{$uf}/{$city}/{$street}/json/";
 
         try {
             $response = $this->httpClient->request('GET', $url);
@@ -71,7 +78,7 @@ class ViaCepService implements CepServiceInterface
             }
 
             return array_map(function ($item) {
-                return new ViaCEPResponseDTO(
+                return new ZipCodeResponseDTO(
                     $item['cep'] ?? null,
                     $item['logradouro'] ?? null,
                     $item['complemento'] ?? null,
