@@ -17,9 +17,9 @@ class ViaCepService implements ZipServiceInterface
 
     private Client $httpClient;
 
-    public function __construct()
+    public function __construct(Client $httpClient)
     {
-        $this->httpClient = new Client();
+        $this->httpClient = $httpClient;
     }
 
     public function getAddressByZipCode(ZipCodeRequestDTO $request): ZipCodeResponseDTO

@@ -1,0 +1,130 @@
+<?php
+
+use App\Service\ViaCepService;
+use Mockery as ServiceMock;
+
+//it('can fetch address details by zip code', function () {
+//    $service = ServiceMock::mock(ViaCepService::class);
+//    $service->shouldReceive('fetchAddressByCep')
+//            ->with('01001000')
+//            ->andReturn(['logradouro' => 'Praça da Sé']);
+//
+//    $result = $service->fetchAddressByCep('01001000');
+//    expect($result['logradouro'])->toBe('Praça da Sé');
+//});
+
+
+
+it('gets address by zip code', function () {
+    $zipCode = '08295305';
+    $mockResponse = [
+        "cep" => "08295-305",
+        "logradouro" => "Rua Lagoa Tai Grande",
+        "complemento" => "de 550/551 a 898/899",
+        "bairro" => "Itaquera",
+        "localidade" => "São Paulo",
+        "uf" => "SP",
+        "ibge" => "3550308",
+        "gia" => "1004",
+        "ddd" => "11",
+        "siafi" => "7107"
+    ];
+
+    $this->mockHttpClient->shouldReceive('get')
+        ->with("https://viacep.com.br/ws/$zipCode/json")
+        ->andReturn($mockResponse);
+
+    $result = $this->viaCepService->getAddressByZipCode($zipCode);
+
+    expect($result)->toBe($mockResponse);
+});
+
+it('gets address by location', function () {
+    $uf = 'SP';
+    $city = 'São Paulo';
+    $street = 'Rua Lagoa Tai Grande';
+    $mockResponse = [
+        [
+            "cep" => "08295-305",
+            "logradouro" => "Rua Lagoa Tai Grande",
+            "complemento" => "de 550/551 a 898/899",
+            "bairro" => "Itaquera",
+            "localidade" => "São Paulo",
+            "uf" => "SP",
+            "ibge" => "3550308",
+            "gia" => "1004",
+            "ddd" => "11",
+            "siafi" => "7107"
+        ]
+    ];
+
+    $this->mockHttpClient->shouldReceive('get')
+        ->with("https://viacep.com.br/ws/$uf/$city/$street/json")
+        ->andReturn($mockResponse);
+
+    $result = $this->viaCepService->getAddressByLocation($uf, $city, $street);
+
+    expect($result)->toBe($mockResponse);
+});
+
+/*
+// Tests for ZipRepository
+tests('ZipRepository')
+    ->group('repository')
+    ->beforeEach(function () {
+        $this->mockViaCepService = Mockery::mock(ViaCepService::class);
+        $this->zipRepository = new ZipRepository($this->mockViaCepService);
+    });
+
+it('fetches zip code data using ViaCepService', function () {
+    $zipCode = '08295305';
+    $mockResponse = [
+        "cep" => "08295-305",
+        "logradouro" => "Rua Lagoa Tai Grande",
+        "complemento" => "de 550/551 a 898/899",
+        "bairro" => "Itaquera",
+        "localidade" => "São Paulo",
+        "uf" => "SP",
+        "ibge" => "3550308",
+        "gia" => "1004",
+        "ddd" => "11",
+        "siafi" => "7107"
+    ];
+
+    $this->mockViaCepService->shouldReceive('getAddressByZipCode')
+        ->with($zipCode)
+        ->andReturn($mockResponse);
+
+    $result = $this->zipRepository->getZipCodeData($zipCode);
+
+    expect($result)->toBe($mockResponse);
+});
+
+it('fetches location data using ViaCepService', function () {
+    $uf = 'SP';
+    $city = 'São Paulo';
+    $street = 'Rua Lagoa Tai Grande';
+    $mockResponse = [
+        [
+            "cep" => "08295-305",
+            "logradouro" => "Rua Lagoa Tai Grande",
+            "complemento" => "de 550/551 a 898/899",
+            "bairro" => "Itaquera",
+            "localidade" => "São Paulo",
+            "uf" => "SP",
+            "ibge" => "3550308",
+            "gia" => "1004",
+            "ddd" => "11",
+            "siafi" => "7107"
+        ]
+    ];
+
+    $this->mockViaCepService->shouldReceive('getAddressByLocation')
+        ->with($uf, $city, $street)
+        ->andReturn($mockResponse);
+
+    $result = $this->zipRepository->getLocationData($uf, $city, $street);
+
+    expect($result)->toBe($mockResponse);
+});
+*/

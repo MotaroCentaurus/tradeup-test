@@ -8,6 +8,7 @@ use App\UseCase\GetAddressByLocationUseCase;
 use App\UseCase\GetAddressByZipCodeUseCase;
 use App\Repository\ZipRepository;
 use App\Service\ViaCepService;
+use GuzzleHttp\Client;
 
 class ZipController
 {
@@ -15,9 +16,13 @@ class ZipController
     {
         $request = new ZipCodeRequestDTO($zipcode);
 
+        $httpClient = new Client();
+        $service = new ViaCepService($httpClient);
+        $repository = new ZipRepository($service);
+
         $response = (new GetAddressByZipCodeUseCase(
             $request,
-            new ZipRepository(new ViaCepService())
+            $repository
         ))();
 
         echo json_encode($response->toArray());
@@ -27,9 +32,13 @@ class ZipController
     {
         $request = new LocationRequestDTO($uf, $city, $street);
 
+        $httpClient = new Client();
+        $service = new ViaCepService($httpClient);
+        $repository = new ZipRepository($service);
+
         $response = (new GetAddressByLocationUseCase(
             $request,
-            new ZipRepository(new ViaCepService())
+            $repository
         ))();
 
         $responseArray = array_map(function ($address) {
