@@ -10,3 +10,21 @@ services:
     ports:
       - "8000:8000"
     command: php -S 0.0.0.0:8000 ./index.php
+    networks:
+      - test-network
+
+  node:
+    container_name: node_vue_via_cep
+    image: node
+    ports:
+      - "3000:3000"
+    working_dir: /var/www/app
+    volumes:
+      - ./front/ViaCep:/var/www/app
+    command: bash -c 'npm i --silent && npm run dev'
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
