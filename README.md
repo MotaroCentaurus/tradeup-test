@@ -18,6 +18,10 @@ A aplicação foi desenvolvida utilizando PHP 8.3 e pode ser executada em um amb
 
 ### Passos para execução
 1. Clone o repositório ou copie os arquivos para o seu ambiente local.
+```bash
+https://github.com/MotaroCentaurus/tradeup-test.git
+```
+
 2. Certifique-se de que os arquivos estejam organizados conforme o seguinte:
 
 ```
@@ -39,6 +43,12 @@ docker-compose up --build -d
 
 ```
 http://localhost:8000
+```
+
+5. O frontend vai rodar na porta 3000 do docker que estará vinculada à porta 3000 do localhost:
+
+```
+http://localhost:3000
 ```
 
 ---
@@ -136,6 +146,7 @@ GET http://localhost:8000/zip/SP/São Paulo/Rua Lagoa Tai Grande
 A aplicação inclui testes automatizados localizados no diretório `tests/`. Para executá-los, utilize o seguinte comando dentro do container PHP:
 
 ```bash
+docker exec -it php_via_cep bash
 vendor/bin/pest
 ```
 
