@@ -8,18 +8,19 @@ Esta aplicação PHP permite consultar endereços utilizando a API pública do [
 2. Buscar endereços próximos com base em uma localidade específica.
 
 A aplicação foi desenvolvida utilizando PHP 8.3 e pode ser executada em um ambiente Docker.
+O frondend usa VueJS
 
 ---
 
 ## Configuração e Execução
 
 ### Requisitos
-- Docker e Docker Compose instalados na máquina.
+- Git, Docker e Docker Compose instalados na máquina. E ter as portas 8000 e 3000 livres.
 
 ### Passos para execução
 1. Clone o repositório ou copie os arquivos para o seu ambiente local.
 ```bash
-https://github.com/MotaroCentaurus/tradeup-test.git
+git clone https://github.com/MotaroCentaurus/tradeup-test.git
 ```
 
 2. Certifique-se de que os arquivos estejam organizados conforme o seguinte:
@@ -39,7 +40,7 @@ https://github.com/MotaroCentaurus/tradeup-test.git
 docker-compose up --build -d
 ```
 
-4. Acesse a aplicação no navegador ou via ferramenta de testes como cURL ou Postman em:
+4. Acesse a aplicação no navegador ou via ferramenta de testes como cURL, Postman ou Insomnia em:
 
 ```
 http://localhost:8000
@@ -143,7 +144,7 @@ GET http://localhost:8000/zip/SP/São Paulo/Rua Lagoa Tai Grande
 
 ## Testes
 
-A aplicação inclui testes automatizados localizados no diretório `tests/`. Para executá-los, utilize o seguinte comando dentro do container PHP:
+A aplicação inclui testes automatizados localizados no diretório `tests/`. Para executá-los, utilize o seguinte comando na linha de comando no terminal:
 
 ```bash
 docker exec -it php_via_cep bash
